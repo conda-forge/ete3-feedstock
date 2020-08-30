@@ -1,8 +1,7 @@
 {% set name = "ete3" %}
-{% set version = "3.1.1" %}
+{% set version = "3.1.2" %}
 {% set bundle = "tar.gz" %}
-{% set hash_type = "sha256" %}
-{% set hash = "870a3d4b496a36fbda4b13c7c6b9dfa7638384539ae93551ec7acb377fb9c385" %}
+{% set hash = "4fc987b8c529889d6608fab1101f1455cb5cbd42722788de6aea9c7d0a8e59e9" %}
 
 package:
   name: {{ name|lower }}
@@ -11,12 +10,12 @@ package:
 source:
   fn: {{ name }}-{{ version }}.{{ bundle }}
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.{{ bundle }}
-  {{ hash_type }}: {{ hash }}
+  sha256: {{ hash }}
 
 build:
   noarch: python
-  number: 2
-  script: python -m pip install --no-deps --ignore-installed .
+  number: 0
+  script: {{ PYTHON }} -m pip install . --no-deps -vv
   entry_points:
     - ete3 = ete3.tools.ete:main
 
@@ -54,7 +53,7 @@ test:
     - ete3.treeview
     - ete3.utils
     - ete3.webplugin
- 
+
   commands:
     - ete3 --help
     # ete3 cmdline tools not officially supported on win
@@ -66,7 +65,7 @@ about:
   license_file: LICENSE
   license: GPLv3
   license_family: GPL
-  summary: 'Python package for building, comparing, annotating, manipulating and visualising trees. It provides a comprehensive API and a collection of command line tools, including utilities to work with the NCBI taxonomy tree.'
+  summary: Python package for building, comparing, annotating, manipulating and visualising trees. It provides a comprehensive API and a collection of command line tools, including utilities to work with the NCBI taxonomy tree.
   doc_url: http://etetoolkit.org/
   dev_url: https://github.com/etetoolkit/ete
 
