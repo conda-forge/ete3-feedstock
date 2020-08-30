@@ -5,7 +5,7 @@ Home: http://etetoolkit.org/
 
 Package license: GPLv3
 
-Feedstock license: BSD 3-Clause
+Feedstock license: BSD-3-Clause
 
 Summary: Python package for building, comparing, annotating, manipulating and visualising trees. It provides a comprehensive API and a collection of command line tools, including utilities to work with the NCBI taxonomy tree.
 
