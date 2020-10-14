@@ -48,6 +48,49 @@ diff -ruN /tmp/ete/ete3/__init__.py /tmp/ete_new/ete3/__init__.py
  
  try:
      from .version import __version__
+Binary files /tmp/ete/ete3/.__init__.py.swp and /tmp/ete_new/ete3/.__init__.py.swp differ
+diff -ruN /tmp/ete/ete3/tools/ete_view.py /tmp/ete_new/ete3/tools/ete_view.py
+--- /tmp/ete/ete3/tools/ete_view.py	2020-10-14 12:57:02.539810759 +0200
++++ /tmp/ete_new/ete3/tools/ete_view.py	2020-10-14 14:09:20.615514307 +0200
+@@ -45,7 +45,7 @@
+ from collections import defaultdict
+ 
+ from .common import log, POSNAMES, node_matcher, src_tree_iterator
+-from .. import (Tree, PhyloTree, TextFace, RectFace, faces, TreeStyle, CircleFace, AttrFace,
++from .. import (Tree, PhyloTree, SeqMotifFace, TextFace, RectFace, TreeStyle, CircleFace, AttrFace,
+                 add_face_to_node, random_color)
+ from six.moves import map
+ 
+@@ -417,15 +417,15 @@
+                                              fstyle = f.get('fstyle', None))
+ 
+                             elif f["ftype"] == "fullseq":
+-                                F = faces.SeqMotifFace(seq=fvalue, seq_format="seq",
++                                F = SeqMotifFace(seq=fvalue, seq_format="seq",
+                                                        gap_format="line",
+                                                        height=fsize)
+                             elif f["ftype"] == "compactseq":
+-                                F = faces.SeqMotifFace(seq=fvalue, seq_format="compactseq",
++                                F = SeqMotifFace(seq=fvalue, seq_format="compactseq",
+                                                        gap_format="compactseq",
+                                                        height=fsize)
+                             elif f["ftype"] == "blockseq":
+-                                F = faces.SeqMotifFace(seq=fvalue, 
++                                F = SeqMotifFace(seq=fvalue, 
+                                                        height=fsize,
+                                                        fgcolor=fcolor or "slategrey",
+                                                        bgcolor=fbgcolor or "slategrey",
+@@ -438,7 +438,7 @@
+                                     rad = fsize
+                                 else:
+                                     rad = fsize * v
+-                                F = faces.CircleFace(radius=rad, style="sphere",
++                                F = CircleFace(radius=rad, style="sphere",
+                                                      color=fcolor or "steelblue")
+ 
+                             elif f["ftype"] == "heatmap":
+Binary files /tmp/ete/ete3/tools/.ete_view.py.swp and /tmp/ete_new/ete3/tools/.ete_view.py.swp differ
+Binary files /tmp/ete/ete3/treeview/.faces.py.swp and /tmp/ete_new/ete3/treeview/.faces.py.swp differ
 diff -ruN /tmp/ete/.git/config /tmp/ete_new/.git/config
 --- /tmp/ete/.git/config	2020-10-14 12:57:02.423810626 +0200
 +++ /tmp/ete_new/.git/config	1970-01-01 01:00:00.000000000 +0100
