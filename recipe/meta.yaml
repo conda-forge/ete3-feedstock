@@ -30,7 +30,7 @@ requirements:
     - six
     - lxml
     - numpy
-    - pyqt >=4.11.*,<5
+    - pyqt >=4.11.*
     - scipy
     - xorg-libxext
     - xorg-xextproto
