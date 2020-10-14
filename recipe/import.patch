@@ -1,0 +1,1000 @@
+diff -ruN /tmp/ete/.coveragerc /tmp/ete_new/.coveragerc
+--- /tmp/ete/.coveragerc	2020-10-14 12:57:02.475810686 +0200
++++ /tmp/ete_new/.coveragerc	1970-01-01 01:00:00.000000000 +0100
+@@ -1,24 +0,0 @@
+-[run]
+-omit =
+-    */ete3/test/*
+-    
+-    # unmaintained 
+-    */ete3/phylomedb/*
+-    
+-    # There are no GUI tests
+-    */ete3/treeview/qt4_gui.py
+-    */ete3/treeview/node_gui_actions.py
+-    */__init__.py
+-  
+-    
+-source = ete3
+-branch = True
+-include =  */ete3/*
+-
+-[report]
+-exclude_lines =
+-    pragma: no cover
+-    def __repr__
+-    raise NotImplementedError
+-    if __name__ == .__main__.:
+-
+diff -ruN /tmp/ete/ete3/__init__.py /tmp/ete_new/ete3/__init__.py
+--- /tmp/ete/ete3/__init__.py	2020-10-14 12:57:02.479810691 +0200
++++ /tmp/ete_new/ete3/__init__.py	2020-10-14 13:22:02.901607573 +0200
+@@ -65,14 +65,10 @@
+ except ImportError as e:
+     pass
+ 
+-try:
+-    from .treeview.svg_colors import *
+-    from .treeview.main import *
+-    from .treeview.faces import *
+-    from .treeview import faces
+-    from .treeview import layouts
+-except ImportError as e:
+-    pass
++from .treeview.svg_colors import *
++from .treeview.main import *
++from .treeview.faces import *
++from .treeview import layouts
+ 
+ try:
+     from .version import __version__
+Binary files /tmp/ete/ete3/.__init__.py.swp and /tmp/ete_new/ete3/.__init__.py.swp differ
+diff -ruN /tmp/ete/ete3/tools/ete_view.py /tmp/ete_new/ete3/tools/ete_view.py
+--- /tmp/ete/ete3/tools/ete_view.py	2020-10-14 12:57:02.539810759 +0200
++++ /tmp/ete_new/ete3/tools/ete_view.py	2020-10-14 14:09:20.615514307 +0200
+@@ -45,7 +45,7 @@
+ from collections import defaultdict
+ 
+ from .common import log, POSNAMES, node_matcher, src_tree_iterator
+-from .. import (Tree, PhyloTree, TextFace, RectFace, faces, TreeStyle, CircleFace, AttrFace,
++from .. import (Tree, PhyloTree, SeqMotifFace, TextFace, RectFace, TreeStyle, CircleFace, AttrFace,
+                 add_face_to_node, random_color)
+ from six.moves import map
+ 
+@@ -417,15 +417,15 @@
+                                              fstyle = f.get('fstyle', None))
+ 
+                             elif f["ftype"] == "fullseq":
+-                                F = faces.SeqMotifFace(seq=fvalue, seq_format="seq",
++                                F = SeqMotifFace(seq=fvalue, seq_format="seq",
+                                                        gap_format="line",
+                                                        height=fsize)
+                             elif f["ftype"] == "compactseq":
+-                                F = faces.SeqMotifFace(seq=fvalue, seq_format="compactseq",
++                                F = SeqMotifFace(seq=fvalue, seq_format="compactseq",
+                                                        gap_format="compactseq",
+                                                        height=fsize)
+                             elif f["ftype"] == "blockseq":
+-                                F = faces.SeqMotifFace(seq=fvalue, 
++                                F = SeqMotifFace(seq=fvalue, 
+                                                        height=fsize,
+                                                        fgcolor=fcolor or "slategrey",
+                                                        bgcolor=fbgcolor or "slategrey",
+@@ -438,7 +438,7 @@
+                                     rad = fsize
+                                 else:
+                                     rad = fsize * v
+-                                F = faces.CircleFace(radius=rad, style="sphere",
++                                F = CircleFace(radius=rad, style="sphere",
+                                                      color=fcolor or "steelblue")
+ 
+                             elif f["ftype"] == "heatmap":
+Binary files /tmp/ete/ete3/tools/.ete_view.py.swp and /tmp/ete_new/ete3/tools/.ete_view.py.swp differ
+Binary files /tmp/ete/ete3/treeview/.faces.py.swp and /tmp/ete_new/ete3/treeview/.faces.py.swp differ
+diff -ruN /tmp/ete/.git/config /tmp/ete_new/.git/config
+--- /tmp/ete/.git/config	2020-10-14 12:57:02.423810626 +0200
++++ /tmp/ete_new/.git/config	1970-01-01 01:00:00.000000000 +0100
+@@ -1,11 +0,0 @@
+-[core]
+-	repositoryformatversion = 0
+-	filemode = true
+-	bare = false
+-	logallrefupdates = true
+-[remote "origin"]
+-	url = https://github.com/etetoolkit/ete.git
+-	fetch = +refs/heads/*:refs/remotes/origin/*
+-[branch "master"]
+-	remote = origin
+-	merge = refs/heads/master
+diff -ruN /tmp/ete/.git/description /tmp/ete_new/.git/description
+--- /tmp/ete/.git/description	2020-10-14 12:56:56.863804220 +0200
++++ /tmp/ete_new/.git/description	1970-01-01 01:00:00.000000000 +0100
+@@ -1 +0,0 @@
+-Unnamed repository; edit this file 'description' to name the repository.
+diff -ruN /tmp/ete/.git/HEAD /tmp/ete_new/.git/HEAD
+--- /tmp/ete/.git/HEAD	2020-10-14 12:57:02.419810621 +0200
++++ /tmp/ete_new/.git/HEAD	1970-01-01 01:00:00.000000000 +0100
+@@ -1 +0,0 @@
+-ref: refs/heads/master
+diff -ruN /tmp/ete/.git/hooks/applypatch-msg.sample /tmp/ete_new/.git/hooks/applypatch-msg.sample
+--- /tmp/ete/.git/hooks/applypatch-msg.sample	2020-10-14 12:56:56.867804225 +0200
++++ /tmp/ete_new/.git/hooks/applypatch-msg.sample	1970-01-01 01:00:00.000000000 +0100
+@@ -1,15 +0,0 @@
+-#!/bin/sh
+-#
+-# An example hook script to check the commit log message taken by
+-# applypatch from an e-mail message.
+-#
+-# The hook should exit with non-zero status after issuing an
+-# appropriate message if it wants to stop the commit.  The hook is
+-# allowed to edit the commit message file.
+-#
+-# To enable this hook, rename this file to "applypatch-msg".
+-
+-. git-sh-setup
+-commitmsg="$(git rev-parse --git-path hooks/commit-msg)"
+-test -x "$commitmsg" && exec "$commitmsg" ${1+"$@"}
+-:
+diff -ruN /tmp/ete/.git/hooks/commit-msg.sample /tmp/ete_new/.git/hooks/commit-msg.sample
+--- /tmp/ete/.git/hooks/commit-msg.sample	2020-10-14 12:56:56.863804220 +0200
++++ /tmp/ete_new/.git/hooks/commit-msg.sample	1970-01-01 01:00:00.000000000 +0100
+@@ -1,24 +0,0 @@
+-#!/bin/sh
+-#
+-# An example hook script to check the commit log message.
+-# Called by "git commit" with one argument, the name of the file
+-# that has the commit message.  The hook should exit with non-zero
+-# status after issuing an appropriate message if it wants to stop the
+-# commit.  The hook is allowed to edit the commit message file.
+-#
+-# To enable this hook, rename this file to "commit-msg".
+-
+-# Uncomment the below to add a Signed-off-by line to the message.
+-# Doing this in a hook is a bad idea in general, but the prepare-commit-msg
+-# hook is more suited to it.
+-#
+-# SOB=$(git var GIT_AUTHOR_IDENT | sed -n 's/^\(.*>\).*$/Signed-off-by: \1/p')
+-# grep -qs "^$SOB" "$1" || echo "$SOB" >> "$1"
+-
+-# This example catches duplicate Signed-off-by lines.
+-
+-test "" = "$(grep '^Signed-off-by: ' "$1" |
+-	 sort | uniq -c | sed -e '/^[ 	]*1[ 	]/d')" || {
+-	echo >&2 Duplicate Signed-off-by lines.
+-	exit 1
+-}
+diff -ruN /tmp/ete/.git/hooks/fsmonitor-watchman.sample /tmp/ete_new/.git/hooks/fsmonitor-watchman.sample
+--- /tmp/ete/.git/hooks/fsmonitor-watchman.sample	2020-10-14 12:56:56.863804220 +0200
++++ /tmp/ete_new/.git/hooks/fsmonitor-watchman.sample	1970-01-01 01:00:00.000000000 +0100
+@@ -1,114 +0,0 @@
+-#!/usr/bin/perl
+-
+-use strict;
+-use warnings;
+-use IPC::Open2;
+-
+-# An example hook script to integrate Watchman
+-# (https://facebook.github.io/watchman/) with git to speed up detecting
+-# new and modified files.
+-#
+-# The hook is passed a version (currently 1) and a time in nanoseconds
+-# formatted as a string and outputs to stdout all files that have been
+-# modified since the given time. Paths must be relative to the root of
+-# the working tree and separated by a single NUL.
+-#
+-# To enable this hook, rename this file to "query-watchman" and set
+-# 'git config core.fsmonitor .git/hooks/query-watchman'
+-#
+-my ($version, $time) = @ARGV;
+-
+-# Check the hook interface version
+-
+-if ($version == 1) {
+-	# convert nanoseconds to seconds
+-	$time = int $time / 1000000000;
+-} else {
+-	die "Unsupported query-fsmonitor hook version '$version'.\n" .
+-	    "Falling back to scanning...\n";
+-}
+-
+-my $git_work_tree;
+-if ($^O =~ 'msys' || $^O =~ 'cygwin') {
+-	$git_work_tree = Win32::GetCwd();
+-	$git_work_tree =~ tr/\\/\//;
+-} else {
+-	require Cwd;
+-	$git_work_tree = Cwd::cwd();
+-}
+-
+-my $retry = 1;
+-
+-launch_watchman();
+-
+-sub launch_watchman {
+-
+-	my $pid = open2(\*CHLD_OUT, \*CHLD_IN, 'watchman -j --no-pretty')
+-	    or die "open2() failed: $!\n" .
+-	    "Falling back to scanning...\n";
+-
+-	# In the query expression below we're asking for names of files that
+-	# changed since $time but were not transient (ie created after
+-	# $time but no longer exist).
+-	#
+-	# To accomplish this, we're using the "since" generator to use the
+-	# recency index to select candidate nodes and "fields" to limit the
+-	# output to file names only. Then we're using the "expression" term to
+-	# further constrain the results.
+-	#
+-	# The category of transient files that we want to ignore will have a
+-	# creation clock (cclock) newer than $time_t value and will also not
+-	# currently exist.
+-
+-	my $query = <<"	END";
+-		["query", "$git_work_tree", {
+-			"since": $time,
+-			"fields": ["name"],
+-			"expression": ["not", ["allof", ["since", $time, "cclock"], ["not", "exists"]]]
+-		}]
+-	END
+-
+-	print CHLD_IN $query;
+-	close CHLD_IN;
+-	my $response = do {local $/; <CHLD_OUT>};
+-
+-	die "Watchman: command returned no output.\n" .
+-	    "Falling back to scanning...\n" if $response eq "";
+-	die "Watchman: command returned invalid output: $response\n" .
+-	    "Falling back to scanning...\n" unless $response =~ /^\{/;
+-
+-	my $json_pkg;
+-	eval {
+-		require JSON::XS;
+-		$json_pkg = "JSON::XS";
+-		1;
+-	} or do {
+-		require JSON::PP;
+-		$json_pkg = "JSON::PP";
+-	};
+-
+-	my $o = $json_pkg->new->utf8->decode($response);
+-
+-	if ($retry > 0 and $o->{error} and $o->{error} =~ m/unable to resolve root .* directory (.*) is not watched/) {
+-		print STDERR "Adding '$git_work_tree' to watchman's watch list.\n";
+-		$retry--;
+-		qx/watchman watch "$git_work_tree"/;
+-		die "Failed to make watchman watch '$git_work_tree'.\n" .
+-		    "Falling back to scanning...\n" if $? != 0;
+-
+-		# Watchman will always return all files on the first query so
+-		# return the fast "everything is dirty" flag to git and do the
+-		# Watchman query just to get it over with now so we won't pay
+-		# the cost in git to look up each individual file.
+-		print "/\0";
+-		eval { launch_watchman() };
+-		exit 0;
+-	}
+-
+-	die "Watchman: $o->{error}.\n" .
+-	    "Falling back to scanning...\n" if $o->{error};
+-
+-	binmode STDOUT, ":utf8";
+-	local $, = "\0";
+-	print @{$o->{files}};
+-}
+diff -ruN /tmp/ete/.git/hooks/post-update.sample /tmp/ete_new/.git/hooks/post-update.sample
+--- /tmp/ete/.git/hooks/post-update.sample	2020-10-14 12:56:56.867804225 +0200
++++ /tmp/ete_new/.git/hooks/post-update.sample	1970-01-01 01:00:00.000000000 +0100
+@@ -1,8 +0,0 @@
+-#!/bin/sh
+-#
+-# An example hook script to prepare a packed repository for use over
+-# dumb transports.
+-#
+-# To enable this hook, rename this file to "post-update".
+-
+-exec git update-server-info
+diff -ruN /tmp/ete/.git/hooks/pre-applypatch.sample /tmp/ete_new/.git/hooks/pre-applypatch.sample
+--- /tmp/ete/.git/hooks/pre-applypatch.sample	2020-10-14 12:56:56.863804220 +0200
++++ /tmp/ete_new/.git/hooks/pre-applypatch.sample	1970-01-01 01:00:00.000000000 +0100
+@@ -1,14 +0,0 @@
+-#!/bin/sh
+-#
+-# An example hook script to verify what is about to be committed
+-# by applypatch from an e-mail message.
+-#
+-# The hook should exit with non-zero status after issuing an
+-# appropriate message if it wants to stop the commit.
+-#
+-# To enable this hook, rename this file to "pre-applypatch".
+-
+-. git-sh-setup
+-precommit="$(git rev-parse --git-path hooks/pre-commit)"
+-test -x "$precommit" && exec "$precommit" ${1+"$@"}
+-:
+diff -ruN /tmp/ete/.git/hooks/pre-commit.sample /tmp/ete_new/.git/hooks/pre-commit.sample
+--- /tmp/ete/.git/hooks/pre-commit.sample	2020-10-14 12:56:56.867804225 +0200
++++ /tmp/ete_new/.git/hooks/pre-commit.sample	1970-01-01 01:00:00.000000000 +0100
+@@ -1,49 +0,0 @@
+-#!/bin/sh
+-#
+-# An example hook script to verify what is about to be committed.
+-# Called by "git commit" with no arguments.  The hook should
+-# exit with non-zero status after issuing an appropriate message if
+-# it wants to stop the commit.
+-#
+-# To enable this hook, rename this file to "pre-commit".
+-
+-if git rev-parse --verify HEAD >/dev/null 2>&1
+-then
+-	against=HEAD
+-else
+-	# Initial commit: diff against an empty tree object
+-	against=4b825dc642cb6eb9a060e54bf8d69288fbee4904
+-fi
+-
+-# If you want to allow non-ASCII filenames set this variable to true.
+-allownonascii=$(git config --bool hooks.allownonascii)
+-
+-# Redirect output to stderr.
+-exec 1>&2
+-
+-# Cross platform projects tend to avoid non-ASCII filenames; prevent
+-# them from being added to the repository. We exploit the fact that the
+-# printable range starts at the space character and ends with tilde.
+-if [ "$allownonascii" != "true" ] &&
+-	# Note that the use of brackets around a tr range is ok here, (it's
+-	# even required, for portability to Solaris 10's /usr/bin/tr), since
+-	# the square bracket bytes happen to fall in the designated range.
+-	test $(git diff --cached --name-only --diff-filter=A -z $against |
+-	  LC_ALL=C tr -d '[ -~]\0' | wc -c) != 0
+-then
+-	cat <<\EOF
+-Error: Attempt to add a non-ASCII file name.
+-
+-This can cause problems if you want to work with people on other platforms.
+-
+-To be portable it is advisable to rename the file.
+-
+-If you know what you are doing you can disable this check using:
+-
+-  git config hooks.allownonascii true
+-EOF
+-	exit 1
+-fi
+-
+-# If there are whitespace errors, print the offending file names and fail.
+-exec git diff-index --check --cached $against --
+diff -ruN /tmp/ete/.git/hooks/prepare-commit-msg.sample /tmp/ete_new/.git/hooks/prepare-commit-msg.sample
+--- /tmp/ete/.git/hooks/prepare-commit-msg.sample	2020-10-14 12:56:56.863804220 +0200
++++ /tmp/ete_new/.git/hooks/prepare-commit-msg.sample	1970-01-01 01:00:00.000000000 +0100
+@@ -1,42 +0,0 @@
+-#!/bin/sh
+-#
+-# An example hook script to prepare the commit log message.
+-# Called by "git commit" with the name of the file that has the
+-# commit message, followed by the description of the commit
+-# message's source.  The hook's purpose is to edit the commit
+-# message file.  If the hook fails with a non-zero status,
+-# the commit is aborted.
+-#
+-# To enable this hook, rename this file to "prepare-commit-msg".
+-
+-# This hook includes three examples. The first one removes the
+-# "# Please enter the commit message..." help message.
+-#
+-# The second includes the output of "git diff --name-status -r"
+-# into the message, just before the "git status" output.  It is
+-# commented because it doesn't cope with --amend or with squashed
+-# commits.
+-#
+-# The third example adds a Signed-off-by line to the message, that can
+-# still be edited.  This is rarely a good idea.
+-
+-COMMIT_MSG_FILE=$1
+-COMMIT_SOURCE=$2
+-SHA1=$3
+-
+-/usr/bin/perl -i.bak -ne 'print unless(m/^. Please enter the commit message/..m/^#$/)' "$COMMIT_MSG_FILE"
+-
+-# case "$COMMIT_SOURCE,$SHA1" in
+-#  ,|template,)
+-#    /usr/bin/perl -i.bak -pe '
+-#       print "\n" . `git diff --cached --name-status -r`
+-# 	 if /^#/ && $first++ == 0' "$COMMIT_MSG_FILE" ;;
+-#  *) ;;
+-# esac
+-
+-# SOB=$(git var GIT_COMMITTER_IDENT | sed -n 's/^\(.*>\).*$/Signed-off-by: \1/p')
+-# git interpret-trailers --in-place --trailer "$SOB" "$COMMIT_MSG_FILE"
+-# if test -z "$COMMIT_SOURCE"
+-# then
+-#   /usr/bin/perl -i.bak -pe 'print "\n" if !$first_line++' "$COMMIT_MSG_FILE"
+-# fi
+diff -ruN /tmp/ete/.git/hooks/pre-push.sample /tmp/ete_new/.git/hooks/pre-push.sample
+--- /tmp/ete/.git/hooks/pre-push.sample	2020-10-14 12:56:56.863804220 +0200
++++ /tmp/ete_new/.git/hooks/pre-push.sample	1970-01-01 01:00:00.000000000 +0100
+@@ -1,53 +0,0 @@
+-#!/bin/sh
+-
+-# An example hook script to verify what is about to be pushed.  Called by "git
+-# push" after it has checked the remote status, but before anything has been
+-# pushed.  If this script exits with a non-zero status nothing will be pushed.
+-#
+-# This hook is called with the following parameters:
+-#
+-# $1 -- Name of the remote to which the push is being done
+-# $2 -- URL to which the push is being done
+-#
+-# If pushing without using a named remote those arguments will be equal.
+-#
+-# Information about the commits which are being pushed is supplied as lines to
+-# the standard input in the form:
+-#
+-#   <local ref> <local sha1> <remote ref> <remote sha1>
+-#
+-# This sample shows how to prevent push of commits where the log message starts
+-# with "WIP" (work in progress).
+-
+-remote="$1"
+-url="$2"
+-
+-z40=0000000000000000000000000000000000000000
+-
+-while read local_ref local_sha remote_ref remote_sha
+-do
+-	if [ "$local_sha" = $z40 ]
+-	then
+-		# Handle delete
+-		:
+-	else
+-		if [ "$remote_sha" = $z40 ]
+-		then
+-			# New branch, examine all commits
+-			range="$local_sha"
+-		else
+-			# Update to existing branch, examine new commits
+-			range="$remote_sha..$local_sha"
+-		fi
+-
+-		# Check for WIP commit
+-		commit=`git rev-list -n 1 --grep '^WIP' "$range"`
+-		if [ -n "$commit" ]
+-		then
+-			echo >&2 "Found WIP commit in $local_ref, not pushing"
+-			exit 1
+-		fi
+-	fi
+-done
+-
+-exit 0
+diff -ruN /tmp/ete/.git/hooks/pre-rebase.sample /tmp/ete_new/.git/hooks/pre-rebase.sample
+--- /tmp/ete/.git/hooks/pre-rebase.sample	2020-10-14 12:56:56.863804220 +0200
++++ /tmp/ete_new/.git/hooks/pre-rebase.sample	1970-01-01 01:00:00.000000000 +0100
+@@ -1,169 +0,0 @@
+-#!/bin/sh
+-#
+-# Copyright (c) 2006, 2008 Junio C Hamano
+-#
+-# The "pre-rebase" hook is run just before "git rebase" starts doing
+-# its job, and can prevent the command from running by exiting with
+-# non-zero status.
+-#
+-# The hook is called with the following parameters:
+-#
+-# $1 -- the upstream the series was forked from.
+-# $2 -- the branch being rebased (or empty when rebasing the current branch).
+-#
+-# This sample shows how to prevent topic branches that are already
+-# merged to 'next' branch from getting rebased, because allowing it
+-# would result in rebasing already published history.
+-
+-publish=next
+-basebranch="$1"
+-if test "$#" = 2
+-then
+-	topic="refs/heads/$2"
+-else
+-	topic=`git symbolic-ref HEAD` ||
+-	exit 0 ;# we do not interrupt rebasing detached HEAD
+-fi
+-
+-case "$topic" in
+-refs/heads/??/*)
+-	;;
+-*)
+-	exit 0 ;# we do not interrupt others.
+-	;;
+-esac
+-
+-# Now we are dealing with a topic branch being rebased
+-# on top of master.  Is it OK to rebase it?
+-
+-# Does the topic really exist?
+-git show-ref -q "$topic" || {
+-	echo >&2 "No such branch $topic"
+-	exit 1
+-}
+-
+-# Is topic fully merged to master?
+-not_in_master=`git rev-list --pretty=oneline ^master "$topic"`
+-if test -z "$not_in_master"
+-then
+-	echo >&2 "$topic is fully merged to master; better remove it."
+-	exit 1 ;# we could allow it, but there is no point.
+-fi
+-
+-# Is topic ever merged to next?  If so you should not be rebasing it.
+-only_next_1=`git rev-list ^master "^$topic" ${publish} | sort`
+-only_next_2=`git rev-list ^master           ${publish} | sort`
+-if test "$only_next_1" = "$only_next_2"
+-then
+-	not_in_topic=`git rev-list "^$topic" master`
+-	if test -z "$not_in_topic"
+-	then
+-		echo >&2 "$topic is already up to date with master"
+-		exit 1 ;# we could allow it, but there is no point.
+-	else
+-		exit 0
+-	fi
+-else
+-	not_in_next=`git rev-list --pretty=oneline ^${publish} "$topic"`
+-	/usr/bin/perl -e '
+-		my $topic = $ARGV[0];
+-		my $msg = "* $topic has commits already merged to public branch:\n";
+-		my (%not_in_next) = map {
+-			/^([0-9a-f]+) /;
+-			($1 => 1);
+-		} split(/\n/, $ARGV[1]);
+-		for my $elem (map {
+-				/^([0-9a-f]+) (.*)$/;
+-				[$1 => $2];
+-			} split(/\n/, $ARGV[2])) {
+-			if (!exists $not_in_next{$elem->[0]}) {
+-				if ($msg) {
+-					print STDERR $msg;
+-					undef $msg;
+-				}
+-				print STDERR " $elem->[1]\n";
+-			}
+-		}
+-	' "$topic" "$not_in_next" "$not_in_master"
+-	exit 1
+-fi
+-
+-<<\DOC_END
+-
+-This sample hook safeguards topic branches that have been
+-published from being rewound.
+-
+-The workflow assumed here is:
+-
+- * Once a topic branch forks from "master", "master" is never
+-   merged into it again (either directly or indirectly).
+-
+- * Once a topic branch is fully cooked and merged into "master",
+-   it is deleted.  If you need to build on top of it to correct
+-   earlier mistakes, a new topic branch is created by forking at
+-   the tip of the "master".  This is not strictly necessary, but
+-   it makes it easier to keep your history simple.
+-
+- * Whenever you need to test or publish your changes to topic
+-   branches, merge them into "next" branch.
+-
+-The script, being an example, hardcodes the publish branch name
+-to be "next", but it is trivial to make it configurable via
+-$GIT_DIR/config mechanism.
+-
+-With this workflow, you would want to know:
+-
+-(1) ... if a topic branch has ever been merged to "next".  Young
+-    topic branches can have stupid mistakes you would rather
+-    clean up before publishing, and things that have not been
+-    merged into other branches can be easily rebased without
+-    affecting other people.  But once it is published, you would
+-    not want to rewind it.
+-
+-(2) ... if a topic branch has been fully merged to "master".
+-    Then you can delete it.  More importantly, you should not
+-    build on top of it -- other people may already want to
+-    change things related to the topic as patches against your
+-    "master", so if you need further changes, it is better to
+-    fork the topic (perhaps with the same name) afresh from the
+-    tip of "master".
+-
+-Let's look at this example:
+-
+-		   o---o---o---o---o---o---o---o---o---o "next"
+-		  /       /           /           /
+-		 /   a---a---b A     /           /
+-		/   /               /           /
+-	       /   /   c---c---c---c B         /
+-	      /   /   /             \         /
+-	     /   /   /   b---b C     \       /
+-	    /   /   /   /             \     /
+-    ---o---o---o---o---o---o---o---o---o---o---o "master"
+-
+-
+-A, B and C are topic branches.
+-
+- * A has one fix since it was merged up to "next".
+-
+- * B has finished.  It has been fully merged up to "master" and "next",
+-   and is ready to be deleted.
+-
+- * C has not merged to "next" at all.
+-
+-We would want to allow C to be rebased, refuse A, and encourage
+-B to be deleted.
+-
+-To compute (1):
+-
+-	git rev-list ^master ^topic next
+-	git rev-list ^master        next
+-
+-	if these match, topic has not merged in next at all.
+-
+-To compute (2):
+-
+-	git rev-list master..topic
+-
+-	if this is empty, it is fully merged to "master".
+-
+-DOC_END
+diff -ruN /tmp/ete/.git/hooks/pre-receive.sample /tmp/ete_new/.git/hooks/pre-receive.sample
+--- /tmp/ete/.git/hooks/pre-receive.sample	2020-10-14 12:56:56.863804220 +0200
++++ /tmp/ete_new/.git/hooks/pre-receive.sample	1970-01-01 01:00:00.000000000 +0100
+@@ -1,24 +0,0 @@
+-#!/bin/sh
+-#
+-# An example hook script to make use of push options.
+-# The example simply echoes all push options that start with 'echoback='
+-# and rejects all pushes when the "reject" push option is used.
+-#
+-# To enable this hook, rename this file to "pre-receive".
+-
+-if test -n "$GIT_PUSH_OPTION_COUNT"
+-then
+-	i=0
+-	while test "$i" -lt "$GIT_PUSH_OPTION_COUNT"
+-	do
+-		eval "value=\$GIT_PUSH_OPTION_$i"
+-		case "$value" in
+-		echoback=*)
+-			echo "echo from the pre-receive-hook: ${value#*=}" >&2
+-			;;
+-		reject)
+-			exit 1
+-		esac
+-		i=$((i + 1))
+-	done
+-fi
+diff -ruN /tmp/ete/.git/hooks/update.sample /tmp/ete_new/.git/hooks/update.sample
+--- /tmp/ete/.git/hooks/update.sample	2020-10-14 12:56:56.867804225 +0200
++++ /tmp/ete_new/.git/hooks/update.sample	1970-01-01 01:00:00.000000000 +0100
+@@ -1,128 +0,0 @@
+-#!/bin/sh
+-#
+-# An example hook script to block unannotated tags from entering.
+-# Called by "git receive-pack" with arguments: refname sha1-old sha1-new
+-#
+-# To enable this hook, rename this file to "update".
+-#
+-# Config
+-# ------
+-# hooks.allowunannotated
+-#   This boolean sets whether unannotated tags will be allowed into the
+-#   repository.  By default they won't be.
+-# hooks.allowdeletetag
+-#   This boolean sets whether deleting tags will be allowed in the
+-#   repository.  By default they won't be.
+-# hooks.allowmodifytag
+-#   This boolean sets whether a tag may be modified after creation. By default
+-#   it won't be.
+-# hooks.allowdeletebranch
+-#   This boolean sets whether deleting branches will be allowed in the
+-#   repository.  By default they won't be.
+-# hooks.denycreatebranch
+-#   This boolean sets whether remotely creating branches will be denied
+-#   in the repository.  By default this is allowed.
+-#
+-
+-# --- Command line
+-refname="$1"
+-oldrev="$2"
+-newrev="$3"
+-
+-# --- Safety check
+-if [ -z "$GIT_DIR" ]; then
+-	echo "Don't run this script from the command line." >&2
+-	echo " (if you want, you could supply GIT_DIR then run" >&2
+-	echo "  $0 <ref> <oldrev> <newrev>)" >&2
+-	exit 1
+-fi
+-
+-if [ -z "$refname" -o -z "$oldrev" -o -z "$newrev" ]; then
+-	echo "usage: $0 <ref> <oldrev> <newrev>" >&2
+-	exit 1
+-fi
+-
+-# --- Config
+-allowunannotated=$(git config --bool hooks.allowunannotated)
+-allowdeletebranch=$(git config --bool hooks.allowdeletebranch)
+-denycreatebranch=$(git config --bool hooks.denycreatebranch)
+-allowdeletetag=$(git config --bool hooks.allowdeletetag)
+-allowmodifytag=$(git config --bool hooks.allowmodifytag)
+-
+-# check for no description
+-projectdesc=$(sed -e '1q' "$GIT_DIR/description")
+-case "$projectdesc" in
+-"Unnamed repository"* | "")
+-	echo "*** Project description file hasn't been set" >&2
+-	exit 1
+-	;;
+-esac
+-
+-# --- Check types
+-# if $newrev is 0000...0000, it's a commit to delete a ref.
+-zero="0000000000000000000000000000000000000000"
+-if [ "$newrev" = "$zero" ]; then
+-	newrev_type=delete
+-else
+-	newrev_type=$(git cat-file -t $newrev)
+-fi
+-
+-case "$refname","$newrev_type" in
+-	refs/tags/*,commit)
+-		# un-annotated tag
+-		short_refname=${refname##refs/tags/}
+-		if [ "$allowunannotated" != "true" ]; then
+-			echo "*** The un-annotated tag, $short_refname, is not allowed in this repository" >&2
+-			echo "*** Use 'git tag [ -a | -s ]' for tags you want to propagate." >&2
+-			exit 1
+-		fi
+-		;;
+-	refs/tags/*,delete)
+-		# delete tag
+-		if [ "$allowdeletetag" != "true" ]; then
+-			echo "*** Deleting a tag is not allowed in this repository" >&2
+-			exit 1
+-		fi
+-		;;
+-	refs/tags/*,tag)
+-		# annotated tag
+-		if [ "$allowmodifytag" != "true" ] && git rev-parse $refname > /dev/null 2>&1
+-		then
+-			echo "*** Tag '$refname' already exists." >&2
+-			echo "*** Modifying a tag is not allowed in this repository." >&2
+-			exit 1
+-		fi
+-		;;
+-	refs/heads/*,commit)
+-		# branch
+-		if [ "$oldrev" = "$zero" -a "$denycreatebranch" = "true" ]; then
+-			echo "*** Creating a branch is not allowed in this repository" >&2
+-			exit 1
+-		fi
+-		;;
+-	refs/heads/*,delete)
+-		# delete branch
+-		if [ "$allowdeletebranch" != "true" ]; then
+-			echo "*** Deleting a branch is not allowed in this repository" >&2
+-			exit 1
+-		fi
+-		;;
+-	refs/remotes/*,commit)
+-		# tracking branch
+-		;;
+-	refs/remotes/*,delete)
+-		# delete tracking branch
+-		if [ "$allowdeletebranch" != "true" ]; then
+-			echo "*** Deleting a tracking branch is not allowed in this repository" >&2
+-			exit 1
+-		fi
+-		;;
+-	*)
+-		# Anything else (is there anything else?)
+-		echo "*** Update hook: unknown type of update to ref $refname of type $newrev_type" >&2
+-		exit 1
+-		;;
+-esac
+-
+-# --- Finished
+-exit 0
+Binary files /tmp/ete/.git/index and /tmp/ete_new/.git/index differ
+diff -ruN /tmp/ete/.git/info/exclude /tmp/ete_new/.git/info/exclude
+--- /tmp/ete/.git/info/exclude	2020-10-14 12:56:56.859804216 +0200
++++ /tmp/ete_new/.git/info/exclude	1970-01-01 01:00:00.000000000 +0100
+@@ -1,6 +0,0 @@
+-# git ls-files --others --exclude-from=.git/info/exclude
+-# Lines that start with '#' are comments.
+-# For a project mostly in C, the following would be a good set of
+-# exclude patterns (uncomment them if you want to use them):
+-# *.[oa]
+-# *~
+diff -ruN /tmp/ete/.git/logs/HEAD /tmp/ete_new/.git/logs/HEAD
+--- /tmp/ete/.git/logs/HEAD	2020-10-14 12:57:02.419810621 +0200
++++ /tmp/ete_new/.git/logs/HEAD	1970-01-01 01:00:00.000000000 +0100
+@@ -1 +0,0 @@
+-0000000000000000000000000000000000000000 97e0ce9fab2f2286c69fb31577df75684613e769 Matthias Bernt <m.bernt@ufz.de> 1602673022 +0200	clone: from https://github.com/etetoolkit/ete.git
+diff -ruN /tmp/ete/.git/logs/refs/heads/master /tmp/ete_new/.git/logs/refs/heads/master
+--- /tmp/ete/.git/logs/refs/heads/master	2020-10-14 12:57:02.419810621 +0200
++++ /tmp/ete_new/.git/logs/refs/heads/master	1970-01-01 01:00:00.000000000 +0100
+@@ -1 +0,0 @@
+-0000000000000000000000000000000000000000 97e0ce9fab2f2286c69fb31577df75684613e769 Matthias Bernt <m.bernt@ufz.de> 1602673022 +0200	clone: from https://github.com/etetoolkit/ete.git
+diff -ruN /tmp/ete/.git/logs/refs/remotes/origin/HEAD /tmp/ete_new/.git/logs/refs/remotes/origin/HEAD
+--- /tmp/ete/.git/logs/refs/remotes/origin/HEAD	2020-10-14 12:57:02.419810621 +0200
++++ /tmp/ete_new/.git/logs/refs/remotes/origin/HEAD	1970-01-01 01:00:00.000000000 +0100
+@@ -1 +0,0 @@
+-0000000000000000000000000000000000000000 97e0ce9fab2f2286c69fb31577df75684613e769 Matthias Bernt <m.bernt@ufz.de> 1602673022 +0200	clone: from https://github.com/etetoolkit/ete.git
+Binary files /tmp/ete/.git/objects/pack/pack-10afe30094a02542c4e9929d1213732e6d8cb147.idx and /tmp/ete_new/.git/objects/pack/pack-10afe30094a02542c4e9929d1213732e6d8cb147.idx differ
+Binary files /tmp/ete/.git/objects/pack/pack-10afe30094a02542c4e9929d1213732e6d8cb147.pack and /tmp/ete_new/.git/objects/pack/pack-10afe30094a02542c4e9929d1213732e6d8cb147.pack differ
+diff -ruN /tmp/ete/.git/packed-refs /tmp/ete_new/.git/packed-refs
+--- /tmp/ete/.git/packed-refs	2020-10-14 12:57:02.419810621 +0200
++++ /tmp/ete_new/.git/packed-refs	1970-01-01 01:00:00.000000000 +0100
+@@ -1,64 +0,0 @@
+-# pack-refs with: peeled fully-peeled sorted 
+-4a59044e8ea7d3389beb430a52329b5a15836fd2 refs/remotes/origin/2.1
+-cba7dc2560dff85be068c51d6c0ac676ec36b203 refs/remotes/origin/2.2
+-1674999f39cca8621886ac9a2aa74df80072014d refs/remotes/origin/2.3
+-b54e5706815edb40cc25deb2be9b1e8865ccc824 refs/remotes/origin/3.0
+-3c4321c4eb2f754fe15aef9b7d137f48e7d98202 refs/remotes/origin/e5_tweaks
+-c3aadbc3feb64c5f88f174b6c37ebd949942c9b3 refs/remotes/origin/feature/iqtree
+-97e0ce9fab2f2286c69fb31577df75684613e769 refs/remotes/origin/master
+-59dea1b7218829757f32c58934e292d6158a9948 refs/remotes/origin/mca_method_issue_398
+-1dd23f9701577142eaa4a5793fd58c2aadc1387b refs/remotes/origin/ncbi
+-0d37affe2745eed37a8333e4c5c998c7832fee1b refs/remotes/origin/qt5
+-4358351578f924c87d1c4c02498ca1abc636bd31 refs/remotes/origin/revert-405-master
+-8fad9ca30d2957b8f6af33957c1cc9f1d85353f5 refs/tags/2.3.0-rc1
+-7b67b6f10abfdf404f3d6d25235b5fcdecd28a70 refs/tags/2.3.0-rc2
+-c8d69050c3c63a23e9d9828b8e54501707964358 refs/tags/2.3.1
+-476722ec18338eb46037b06334e3b16c81bface2 refs/tags/2.3.10
+-14b1d6e7a0c77cbaca026ad5cf53d9c86f4a5bf4 refs/tags/2.3.2
+-e64d6ba3ae116ab766a599cc196935002e8eee19 refs/tags/2.3.3
+-007ae665bc24c76bd09b5e661b4c7e82bc4c36cc refs/tags/2.3.4
+-673a0eefd0e838860d18e859adf32b564023f712 refs/tags/2.3.5
+-f899dc56f2d09469ef03c61dfb0d4e955aa76e36 refs/tags/2.3.6
+-a3b4d7b44f3e8fa541f4e6c5b6e87e45ff5e46c8 refs/tags/2.3.7
+-7dd6d48b12ea48228cb6e8dd8f81536d094e70b5 refs/tags/2.3.8
+-85055442da7eae443b0247e2363c7ac3b8b36f44 refs/tags/2.3.9
+-4d18e36242e0ce95e549b3906d1251a101f9583a refs/tags/3.0.0-b5
+-3a5759ce7f48bdd3f9236a2df710aeef6e169207 refs/tags/3.0.0-beta2
+-265ce76c7b59d89fe0375f43e6e237804fe0e40e refs/tags/3.0.0-beta3
+-a62bb582c727c896ebe7680f37641f30dd0f0547 refs/tags/3.0.0-beta4
+-9b8f746b2888e54f82a41a2f4b51107a59d54520 refs/tags/3.0.0b10
+-dec013b5f13c2842acc2d8961b1f39031dc8dc61 refs/tags/3.0.0b11
+-6027a62486670343b9466c74fdfe9e5dc64d4b10 refs/tags/3.0.0b12
+-0f7be592f13bca0692f1aee356481a915296c73b refs/tags/3.0.0b13
+-f33b23acaeebd1fbce4830ad4a6c40d4cd82212c refs/tags/3.0.0b14
+-675c5f90ff18811ad65aeb2ab8231bba54f1c5b0 refs/tags/3.0.0b15
+-8007cd6575d34daa1804161aaee66c66b847c594 refs/tags/3.0.0b16
+-db605af689562c06e29a975453f35d2fc2bf0ed6 refs/tags/3.0.0b17
+-ccb825a4bd9ce4042eff9e3b6d8bfca81207203c refs/tags/3.0.0b18
+-21281d17324517921f2b8a73f444cae3392053cf refs/tags/3.0.0b19
+-c728ec534f8277ecf8bf03e41e7e3eacaeb7054a refs/tags/3.0.0b20
+-69a8f9012641064e2d435ee577ac33f6b11f93e1 refs/tags/3.0.0b21
+-e1323ee079ada8fd4c373fb007f6affc16578221 refs/tags/3.0.0b22
+-b445737f33f42863dbd238dadb1f3da8f36abde3 refs/tags/3.0.0b23
+-57ab6dc46044a2810f0d2347403817436f45a3c8 refs/tags/3.0.0b24
+-b1e5d29c0326adef7d1a851d2a24f859ff3a01b9 refs/tags/3.0.0b25
+-b4e0eb2dedaecdc4550df830b82ca6df9341a1c6 refs/tags/3.0.0b26
+-c267c07531f3e17884eb4568ddc9755e436d1224 refs/tags/3.0.0b27
+-e9b37f45df6059072e4daed567036d32f0b85df8 refs/tags/3.0.0b28
+-671e6bba533631e6544da8dce269589de96f9d96 refs/tags/3.0.0b29
+-7ff437c3b6939a1c56c6a95e524522f57b663383 refs/tags/3.0.0b30
+-fe1b799b7f1def070435a4b506c688b027e7e7cf refs/tags/3.0.0b31
+-2f4ea9d293ff616ffd9dd446437425c59d3963db refs/tags/3.0.0b32
+-0d9ff08b577c1992aa3594413368a13eeada9641 refs/tags/3.0.0b33
+-4dca7aa430715e0d653116d7fc4a2e1a5ee8ff75 refs/tags/3.0.0b34
+-a734959f8ed5667c0cfb1713c9a2cd321ae0eb05 refs/tags/3.0.0b35
+-b54e5706815edb40cc25deb2be9b1e8865ccc824 refs/tags/3.0.0b36
+-1d764af9e80d91d67563d2e9a437462efee61505 refs/tags/3.0.0b6
+-48df4c5b25bdb43bad0a6894089e10cdd51eeab2 refs/tags/3.0.0b7
+-15160be480d0a47cac06dba30aee03ee16fc0226 refs/tags/3.0.0b8
+-139914f9565b63d19801ba7a183384d1aa7598b9 refs/tags/3.0.0b9
+-76f6cd12b5d6f113b76ef35bd95d9eb9a993d9f8 refs/tags/3.1.0
+-61e0390b437103e04ae338a28fec547adf73fd6b refs/tags/3.1.1
+-97e0ce9fab2f2286c69fb31577df75684613e769 refs/tags/3.1.2
+-4a59044e8ea7d3389beb430a52329b5a15836fd2 refs/tags/v2.1
+-cba7dc2560dff85be068c51d6c0ac676ec36b203 refs/tags/v2.2
+diff -ruN /tmp/ete/.git/refs/heads/master /tmp/ete_new/.git/refs/heads/master
+--- /tmp/ete/.git/refs/heads/master	2020-10-14 12:57:02.419810621 +0200
++++ /tmp/ete_new/.git/refs/heads/master	1970-01-01 01:00:00.000000000 +0100
+@@ -1 +0,0 @@
+-97e0ce9fab2f2286c69fb31577df75684613e769
+diff -ruN /tmp/ete/.git/refs/remotes/origin/HEAD /tmp/ete_new/.git/refs/remotes/origin/HEAD
+--- /tmp/ete/.git/refs/remotes/origin/HEAD	2020-10-14 12:57:02.419810621 +0200
++++ /tmp/ete_new/.git/refs/remotes/origin/HEAD	1970-01-01 01:00:00.000000000 +0100
+@@ -1 +0,0 @@
+-ref: refs/remotes/origin/master
+diff -ruN /tmp/ete/.github/FUNDING.yml /tmp/ete_new/.github/FUNDING.yml
+--- /tmp/ete/.github/FUNDING.yml	2020-10-14 12:57:02.475810686 +0200
++++ /tmp/ete_new/.github/FUNDING.yml	1970-01-01 01:00:00.000000000 +0100
+@@ -1,12 +0,0 @@
+-# These are supported funding model platforms
+-
+-github: [jhcepas]
+-patreon: # Replace with a single Patreon username
+-open_collective: # Replace with a single Open Collective username
+-ko_fi: # Replace with a single Ko-fi username
+-tidelift: # Replace with a single Tidelift platform-name/package-name e.g., npm/babel
+-community_bridge: # Replace with a single Community Bridge project-name e.g., cloud-foundry
+-liberapay: # Replace with a single Liberapay username
+-issuehunt: # Replace with a single IssueHunt username
+-otechie: # Replace with a single Otechie username
+-custom: # Replace with up to 4 custom sponsorship URLs e.g., ['link1', 'link2']
+diff -ruN /tmp/ete/.gitignore /tmp/ete_new/.gitignore
+--- /tmp/ete/.gitignore	2020-10-14 12:57:02.475810686 +0200
++++ /tmp/ete_new/.gitignore	1970-01-01 01:00:00.000000000 +0100
+@@ -1,25 +0,0 @@
+-build
+-*.pyc
+-*~
+-#*#
+-doc/_build/
+-dist/
+-*.egg-info
+-
+-# Conda testing environment
+-miniconda.sh
+-miniconda/
+-
+-# Test files
+-tests.log
+-test.png
+-test.pdf
+-test.svg
+-testdb.sqlite*
+-ete_test_tmp/
+-test_tmp/
+-
+-# Coverage files
+-.coverage
+-htmlcov/
+-ete
+diff -ruN /tmp/ete/.travis.yml /tmp/ete_new/.travis.yml
+--- /tmp/ete/.travis.yml	2020-10-14 12:57:02.475810686 +0200
++++ /tmp/ete_new/.travis.yml	1970-01-01 01:00:00.000000000 +0100
+@@ -1,43 +0,0 @@
+-language: python
+-sudo: false
+-
+-services:
+-  - xvfb
+-
+-python:
+-  #- "2.7"
+-  #- "3.4"
+-  - "3.5"
+-  - "3.6"
+-
+-cache:
+-  directories:
+-    - test_tmp
+-
+-install:
+-  - ./run_tests.sh -s --setup-only -v "$TRAVIS_PYTHON_VERSION"
+-
+-before_script:
+-  # Ensure tags are available on the cloned repository
+-  - git fetch --tags --depth=50
+-
+-  # Start xvfb
+-  # - "export DISPLAY=:99.0"
+-  # - "sh -e /etc/init.d/xvfb start"
+-  # - sleep 3
+-
+-script:
+-  - ./run_tests.sh --test-only -sv "$TRAVIS_PYTHON_VERSION"
+-  # - if [[ $TRAVIS_PYTHON_VERSION == 2.7 ]]; then ./run_tests.sh --qt4 -sv "$TRAVIS_PYTHON_VERSION" ; fi
+-  - if [[ $TRAVIS_PYTHON_VERSION == 2.7 ]]; then ./run_tests.sh -sv "$TRAVIS_PYTHON_VERSION" ; fi
+-  #- coverage run -m ete3.test.test_api
+-  #- coverage run -a -m ete3.test.test_ete_evol   # too heavy for travis
+-  #- coverage run -a -m ete3.test.test_ete_build  # too heavy for travis
+-
+-after_success:
+-  - coveralls
+-# branches:
+-#   only:
+-#     - master
+-#     - "3.0"
+-#     - "2.3"

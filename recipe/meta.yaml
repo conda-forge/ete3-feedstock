@@ -11,10 +11,12 @@ source:
   fn: {{ name }}-{{ version }}.{{ bundle }}
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.{{ bundle }}
   sha256: {{ hash }}
+  patches:
+    - import.patch
 
 build:
   noarch: python
-  number: 0
+  number: 1
   script: {{ PYTHON }} -m pip install . --no-deps -vv
   entry_points:
     - ete3 = ete3.tools.ete:main
@@ -56,6 +58,7 @@ test:
 
   commands:
     - ete3 --help
+    - ete3 mod --help
     # ete3 cmdline tools not officially supported on win
     # https://groups.google.com/d/msg/etetoolkit/G3QmfxK1Vuk/txqlTTjLEAAJ
     - ete3 build check  # [not win]
