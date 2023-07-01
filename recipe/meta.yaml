@@ -60,15 +60,13 @@ test:
 about:
   home: "http://etetoolkit.org"
   summary: "A Python package for building, comparing, annotating, manipulating, and visualising trees. It provides a comprehensive API and a collection of command line tools, including utilities to work with the NCBI taxonomy tree."
-  license: GPL-3.0
+  license: GPL-3.0-only
   license_family: GPL
   license_file: LICENSE
   dev_url: "https://github.com/etetoolkit/ete"
   doc_url: "http://etetoolkit.org/docs/latest/tutorial/index.html"
 
 extra:
-  identifiers:
-    - doi:10.1093/molbev/msw046
   recipe-maintainers:
     - ltalirz
     - chrisjsewell
